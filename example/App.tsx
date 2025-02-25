@@ -1,37 +1,13 @@
-import { useEvent } from 'expo';
-import ExpoTutorialNative, { ExpoTutorialNativeView } from 'expo-tutorial-native';
-import { Button, SafeAreaView, ScrollView, Text, View } from 'react-native';
+import ExpoTutorialNative from "expo-tutorial-native";
+import { SafeAreaView, ScrollView, Text, View } from "react-native";
 
 export default function App() {
-  const onChangePayload = useEvent(ExpoTutorialNative, 'onChange');
-
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.container}>
-        <Text style={styles.header}>Module API Example</Text>
-        <Group name="Constants">
-          <Text>{ExpoTutorialNative.PI}</Text>
-        </Group>
-        <Group name="Functions">
-          <Text>{ExpoTutorialNative.hello()}</Text>
-        </Group>
-        <Group name="Async functions">
-          <Button
-            title="Set value"
-            onPress={async () => {
-              await ExpoTutorialNative.setValueAsync('Hello from JS!');
-            }}
-          />
-        </Group>
-        <Group name="Events">
-          <Text>{onChangePayload?.value}</Text>
-        </Group>
-        <Group name="Views">
-          <ExpoTutorialNativeView
-            url="https://www.example.com"
-            onLoad={({ nativeEvent: { url } }) => console.log(`Loaded: ${url}`)}
-            style={styles.view}
-          />
+        <Text style={styles.header}>Expo Modules Tutorial</Text>
+        <Group name="Sync Function Add">
+          <Text>{ExpoTutorialNative.add(1, 2)}</Text>
         </Group>
       </ScrollView>
     </SafeAreaView>
@@ -58,13 +34,13 @@ const styles = {
   },
   group: {
     margin: 20,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     borderRadius: 10,
     padding: 20,
   },
   container: {
     flex: 1,
-    backgroundColor: '#eee',
+    backgroundColor: "#eee",
   },
   view: {
     flex: 1,
