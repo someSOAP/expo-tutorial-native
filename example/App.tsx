@@ -9,6 +9,12 @@ export default function App() {
         <Group name="Sync Function Add">
           <Text>Add: {ExpoTutorialNative.add(1, 2)}</Text>
           <Text>Sum: {ExpoTutorialNative.sum([1, 2, 3, 4, 5, 6, 7])}</Text>
+          <Text>
+            Reduce:{" "}
+            {ExpoTutorialNative.reduce([100, 50, 25, 5], (result, item) => {
+              return result - item;
+            })}
+          </Text>
         </Group>
       </ScrollView>
     </SafeAreaView>

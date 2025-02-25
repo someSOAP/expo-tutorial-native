@@ -1,5 +1,6 @@
 package expo.modules.tutorialnative
 
+import expo.modules.kotlin.jni.JavaScriptFunction
 import expo.modules.kotlin.modules.Module
 import expo.modules.kotlin.modules.ModuleDefinition
 
@@ -27,6 +28,14 @@ class ExpoTutorialNativeModule : Module() {
       }
 
       return@Function result
+    }
+
+    Function("reduce") { arr: List<Double>, cb: JavaScriptFunction<Double> ->
+      if(arr.isEmpty()) {
+        return@Function 0.0
+      }
+
+      arr.reduce { result, item -> cb(result, item) }
     }
 
   }

@@ -3,6 +3,7 @@ import { NativeModule, requireNativeModule } from "expo";
 declare class ExpoTutorialNativeModule extends NativeModule {
   add(a: number, b: number): number;
   sum(arr: number[]): number;
+  reduce(arr: number[], cb: (result: number, arg: number) => number): number;
 }
 
 // This call loads the native module object from the JSI.

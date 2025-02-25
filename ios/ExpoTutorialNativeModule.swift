@@ -9,22 +9,33 @@ public class ExpoTutorialNativeModule: Module {
     // Can be inferred from module's class name, but it's recommended to set it explicitly for clarity.
     // The module will be accessible from `requireNativeModule('ExpoTutorialNative')` in JavaScript.
     Name("ExpoTutorialNative")
-
+    
     Function("add") { (a: Double, b: Double) in
-        let result = a + b
-
-        return result
-    }
-
-	Function("sum") { (numbers: [Double]) in
-	  var result = 0.0
-
-	  for number in numbers {
-	    result += number
-      }
-
+      let result = a + b
+      
       return result
-	}
-
+    }
+    
+    Function("sum") { (numbers: [Double]) in
+      var result = 0.0
+      
+      for number in numbers {
+        result += number
+      }
+      
+      return result
+    }
+    
+    
+    Function("reduce") { (arr: [Double], cb: JavaScriptFunction<Double>) in
+      if arr.isEmpty {
+        return 0.0
+      }
+      
+      return arr.dropFirst().reduce(arr[0]) { result, item in
+        return try! cb.call(result, item)
+      }
+    }
+    
   }
 }
