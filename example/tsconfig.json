@@ -1,0 +1,10 @@
+{
+  "extends": "expo/tsconfig.base",
+  "compilerOptions": {
+    "strict": true,
+    "paths": {
+      "expo-tutorial-native": ["../src/index"],
+      "expo-tutorial-native/*": ["../src/*"]
+    }
+  }
+}
