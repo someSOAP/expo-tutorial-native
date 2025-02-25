@@ -1,13 +1,44 @@
 import ExpoTutorialNative from "expo-tutorial-native";
-import { SafeAreaView, ScrollView, Text, View } from "react-native";
+import { useState } from "react";
+import {
+  Button,
+  SafeAreaView,
+  ScrollView,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
 
 export default function App() {
+  const [input, setInput] = useState("");
+  const [note, setNote] = useState(ExpoTutorialNative.getValue("note"));
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.container}>
         <Text style={styles.header}>Expo Modules Tutorial</Text>
         <Group name="Sync Function Add">
-          <Text>{ExpoTutorialNative.add(1, 2)}</Text>
+          <View style={{ gap: 15 }}>
+            <Text>{note}</Text>
+            <TextInput
+              placeholder="Input note..."
+              value={input}
+              onChangeText={setInput}
+            />
+            <Button
+              title="Save note"
+              onPress={() => {
+                ExpoTutorialNative.setValue("note", input);
+                setInput("");
+              }}
+            />
+            <Button
+              title="Refresh note"
+              onPress={() => {
+                setNote(ExpoTutorialNative.getValue("note"));
+              }}
+            />
+          </View>
         </Group>
       </ScrollView>
     </SafeAreaView>

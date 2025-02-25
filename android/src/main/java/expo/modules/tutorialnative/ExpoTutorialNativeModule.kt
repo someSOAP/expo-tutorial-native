@@ -1,5 +1,6 @@
 package expo.modules.tutorialnative
 
+import android.content.Context
 import expo.modules.kotlin.modules.Module
 import expo.modules.kotlin.modules.ModuleDefinition
 
@@ -13,10 +14,14 @@ class ExpoTutorialNativeModule : Module() {
     // The module will be accessible from `requireNativeModule('ExpoTutorialNative')` in JavaScript.
     Name("ExpoTutorialNative")
 
-    Function("add") { a: Double, b: Double ->
-      val result = a + b
+    val storage = MMKVStorage(appContext.reactContext as Context)
 
-      return@Function result
+    Function("getValue") { key: String ->
+      storage.get(key)
+    }
+
+    Function("setValue") { key: String, value: String ->
+      storage.set(key, value)
     }
 
   }
