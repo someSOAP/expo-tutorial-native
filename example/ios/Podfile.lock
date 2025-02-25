@@ -38,12 +38,16 @@ PODS:
     - Yoga
   - ExpoTutorialNative (0.1.0):
     - ExpoModulesCore
+    - MMKV (~> 2.0.2)
   - FBLazyVector (0.76.7)
   - fmt (9.1.0)
   - glog (0.3.5)
   - hermes-engine (0.76.7):
     - hermes-engine/Pre-built (= 0.76.7)
   - hermes-engine/Pre-built (0.76.7)
+  - MMKV (2.0.2):
+    - MMKVCore (~> 2.0.2)
+  - MMKVCore (2.0.2)
   - RCT-Folly (2024.01.01.00):
     - boost
     - DoubleConversion
@@ -1626,6 +1630,8 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - MMKV
+    - MMKVCore
     - SocketRocket
 
 EXTERNAL SOURCES:
@@ -1783,11 +1789,13 @@ SPEC CHECKSUMS:
   ExpoFont: 773955186469acc5108ff569712a2d243857475f
   ExpoKeepAwake: 2a5f15dd4964cba8002c9a36676319a3394c85c7
   ExpoModulesCore: 561a787bc626ab9bcfee2a688bd588bf2667405f
-  ExpoTutorialNative: f89091fcbfaf3bcc3c1aad1dba467fd509e11bf5
+  ExpoTutorialNative: 92afc810d8181602073fbdc468f8236150d4610c
   FBLazyVector: ca8044c9df513671c85167838b4188791b6f37e1
   fmt: 10c6e61f4be25dc963c36bd73fc7b1705fe975be
   glog: 08b301085f15bcbb6ff8632a8ebaf239aae04e6a
   hermes-engine: eb4a80f6bf578536c58a44198ec93a30f6e69218
+  MMKV: 3eacda84cd1c4fc95cf848d3ecb69d85ed56006c
+  MMKVCore: 508b4d3a8ce031f1b5c8bd235f0517fb3f4c73a9
   RCT-Folly: bf5c0376ffe4dd2cf438dcf86db385df9fdce648
   RCTDeprecation: 7691283dd69fed46f6653d376de6fa83aaad774c
   RCTRequired: eac044a04629288f272ee6706e31f81f3a2b4bfe

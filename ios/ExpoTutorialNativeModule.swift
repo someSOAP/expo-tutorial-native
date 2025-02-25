@@ -1,6 +1,9 @@
 import ExpoModulesCore
 
 public class ExpoTutorialNativeModule: Module {
+    
+  let storage = MMKVStorage()
+
   // Each module class must implement the definition function. The definition consists of components
   // that describes the module's functionality and behavior.
   // See https://docs.expo.dev/modules/module-api for more details about available components.
@@ -10,10 +13,12 @@ public class ExpoTutorialNativeModule: Module {
     // The module will be accessible from `requireNativeModule('ExpoTutorialNative')` in JavaScript.
     Name("ExpoTutorialNative")
 
-    Function("add") { (a: Double, b: Double) in
-        let result = a + b
+    Function("setValue") { (key: String, value: String) in
+      storage.set(key: key, value: value)
+    }
 
-        return result
+    Function("getValue") { (key: String) in
+      return storage.get(key: key)
     }
 
   }
