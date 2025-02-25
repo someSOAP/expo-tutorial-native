@@ -16,5 +16,15 @@ public class ExpoTutorialNativeModule: Module {
         return result
     }
 
+	Function("sum") { (numbers: [Double]) in
+	  var result = 0.0
+
+	  for number in numbers {
+	    result += number
+      }
+
+      return result
+	}
+
   }
 }

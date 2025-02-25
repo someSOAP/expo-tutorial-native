@@ -7,7 +7,8 @@ export default function App() {
       <ScrollView style={styles.container}>
         <Text style={styles.header}>Expo Modules Tutorial</Text>
         <Group name="Sync Function Add">
-          <Text>{ExpoTutorialNative.add(1, 2)}</Text>
+          <Text>Add: {ExpoTutorialNative.add(1, 2)}</Text>
+          <Text>Sum: {ExpoTutorialNative.sum([1, 2, 3, 4, 5, 6, 7])}</Text>
         </Group>
       </ScrollView>
     </SafeAreaView>

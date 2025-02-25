@@ -19,5 +19,15 @@ class ExpoTutorialNativeModule : Module() {
       return@Function result
     }
 
+    Function("sum") { arr: List<Double> ->
+      var result = 0.0
+
+      for ( i in arr) {
+        result += i
+      }
+
+      return@Function result
+    }
+
   }
 }
