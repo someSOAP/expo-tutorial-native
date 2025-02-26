@@ -10,10 +10,38 @@ public class ExpoTutorialNativeModule: Module {
     // The module will be accessible from `requireNativeModule('ExpoTutorialNative')` in JavaScript.
     Name("ExpoTutorialNative")
 
-    Function("add") { (a: Double, b: Double) in
-        let result = a + b
+    AsyncFunction("dialog") { (params: [String: Any], promise: Promise) in
+      
+      let title: String = params["message"] as? String ?? "Alert"
+      
+      guard let message: String = params["message"] as? String else {
+        promise.reject("DIALOG_ERROR", "Message is not a string")
+        return
+      }
+      
+      let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
 
-        return result
+      
+      let yesAction = UIAlertAction(title: "Yes", style: .default) { (action) in
+        promise.resolve(true)
+      }
+              
+      let noAction = UIAlertAction(title: "No", style: .destructive) { (action) in
+        promise.resolve(false)
+      }
+      
+      alertController.addAction(noAction)
+      alertController.addAction(yesAction)
+      
+      guard let viewController = appContext?.utilities?.currentViewController() else {
+        promise.reject("DIALOG_ERROR", "current activity is null")
+        return
+      }
+      
+      DispatchQueue.main.async {
+        viewController.present(alertController, animated: true, completion: nil)
+      }
+      
     }
 
   }
