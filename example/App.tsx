@@ -1,13 +1,36 @@
 import ExpoTutorialNative from "expo-tutorial-native";
-import { SafeAreaView, ScrollView, Text, View } from "react-native";
+import { useState } from "react";
+import { Button, SafeAreaView, ScrollView, Text, View } from "react-native";
 
 export default function App() {
+  const [dialogResponse, setDialogResponse] = useState<boolean | undefined>(
+    undefined,
+  );
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.container}>
         <Text style={styles.header}>Expo Modules Tutorial</Text>
-        <Group name="Sync Function Add">
-          <Text>{ExpoTutorialNative.add(1, 2)}</Text>
+        <Group name="Async dialog">
+          <View style={{ gap: 15 }}>
+            {dialogResponse !== undefined && (
+              <Text>{dialogResponse ? "Yes" : "No"}</Text>
+            )}
+            <Button
+              title="Dialog"
+              onPress={() => {
+                ExpoTutorialNative.dialog({
+                  title: "Confirm",
+                  message: "Are you sure?",
+                })
+                  .then((value) => {
+                    setDialogResponse(value);
+                  })
+                  .catch((err) => {
+                    console.error(err);
+                  });
+              }}
+            />
+          </View>
         </Group>
       </ScrollView>
     </SafeAreaView>

@@ -1,7 +1,12 @@
 import { NativeModule, requireNativeModule } from "expo";
 
+interface DialogParams {
+  title?: string;
+  message: string;
+}
+
 declare class ExpoTutorialNativeModule extends NativeModule {
-  add(a: number, b: number): number;
+  dialog(params: DialogParams): Promise<boolean>;
 }
 
 // This call loads the native module object from the JSI.
