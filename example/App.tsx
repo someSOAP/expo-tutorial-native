@@ -1,13 +1,74 @@
+import { EventSubscription } from "expo-modules-core";
 import ExpoTutorialNative from "expo-tutorial-native";
-import { SafeAreaView, ScrollView, Text, View } from "react-native";
+import { useRef, useState } from "react";
+import {
+  Button,
+  SafeAreaView,
+  ScrollView,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
 
 export default function App() {
+  const [connected, setConnected] = useState(false);
+  const [input, setInput] = useState("");
+  const [messages, setMessages] = useState<string[]>([]);
+  const eventRef = useRef<EventSubscription | null>(null);
+
+  const handleConnect = () => {
+    ExpoTutorialNative.connect("ws://192.168.1.3:8082")
+      .then(() => {
+        setConnected(true);
+        eventRef.current = ExpoTutorialNative.addListener(
+          "onMessage",
+          (params) => {
+            setMessages((v) => [params.message, ...v]);
+          },
+        );
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
+
+  const handleDisconnect = () => {
+    ExpoTutorialNative.disconnect();
+    eventRef.current?.remove();
+    eventRef.current = null;
+    setConnected(false);
+  };
+
+  const handleSend = () => {
+    ExpoTutorialNative.send(input)
+      .then(() => {
+        console.log("Sent");
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.container}>
         <Text style={styles.header}>Expo Modules Tutorial</Text>
-        <Group name="Sync Function Add">
-          <Text>{ExpoTutorialNative.add(1, 2)}</Text>
+        <Group name="Events">
+          <View style={{ gap: 15 }}>
+            {!connected && <Button title="Connect" onPress={handleConnect} />}
+            {connected && (
+              <TextInput placeholder="Message" onChangeText={setInput} />
+            )}
+            {connected && <Button title="Send" onPress={handleSend} />}
+            {connected && (
+              <Button title="Disconnect" onPress={handleDisconnect} />
+            )}
+          </View>
+        </Group>
+        <Group name="Messages">
+          {messages.map((message, i) => (
+            <Text key={i}>{message}</Text>
+          ))}
         </Group>
       </ScrollView>
     </SafeAreaView>
