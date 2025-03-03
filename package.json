@@ -5,6 +5,7 @@
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "scripts": {
+    "start:ws": "node echo.js",
     "build": "expo-module build",
     "clean": "expo-module clean",
     "lint": "expo-module lint",
