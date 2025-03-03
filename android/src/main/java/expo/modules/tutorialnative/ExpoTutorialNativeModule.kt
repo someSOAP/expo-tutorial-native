@@ -1,6 +1,5 @@
 package expo.modules.tutorialnative
 
-import android.app.AlertDialog
 import expo.modules.kotlin.Promise
 import expo.modules.kotlin.modules.Module
 import expo.modules.kotlin.modules.ModuleDefinition
@@ -15,17 +14,7 @@ class ExpoTutorialNativeModule : Module() {
     // The module will be accessible from `requireNativeModule('ExpoTutorialNative')` in JavaScript.
     Name("ExpoTutorialNative")
 
-    AsyncFunction("dialog") { params: Map<String, Any>, promise: Promise ->
-
-      val titleParam = params["title"]
-      val messageParam = params["message"]
-
-      val title = if(titleParam is String) titleParam else "Alert"
-
-      val message = if(messageParam is String) messageParam else {
-        promise.reject("DIALOG_ERROR", "Message is not a string", null)
-        return@AsyncFunction
-      }
+    AsyncFunction("dialog") { params: DialogParams, promise: Promise ->
 
       val activity = appContext.activityProvider?.currentActivity
 
@@ -34,24 +23,7 @@ class ExpoTutorialNativeModule : Module() {
         return@AsyncFunction
       }
 
-      val alertBuilder = AlertDialog.Builder(activity)
-
-      alertBuilder.setTitle(title)
-      alertBuilder.setMessage(message)
-      alertBuilder.setCancelable(false)
-
-      alertBuilder.setPositiveButton("Yes") { dialog, which ->
-        promise.resolve(true)
-      }
-
-      alertBuilder.setNegativeButton("No") { dialog, which ->
-        promise.resolve(false)
-      }
-
-      val dialog = alertBuilder.create()
-
-      dialog.show()
-
+      showDialog(activity, params, promise)
     }
 
   }
